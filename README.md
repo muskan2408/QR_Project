@@ -2,7 +2,7 @@
 QR application with three level of security to secure confidential information and to find out the authenticity of the person accessing information.
 
 # SignUp/Signin Screens
-<image src="images/image1.png" width="220" height="370"> <image src="images/image2.jpg" width="220" height="370"> <image src="images/image3.png" width="220" height="370">
+<image src="images/image1.png" width="220" height="370"> <image src="images/image2.png" width="220" height="370"> <image src="images/image3.png" width="220" height="370">
 
 # Main Screen
 <image src="images/image4.png" width="220" height="370"> <image src="images/image5.png" width="220" height="370"> <image src="images/image6.png" width="220" height="370">
