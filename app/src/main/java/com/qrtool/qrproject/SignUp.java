@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +27,8 @@ public class SignUp extends AppCompatActivity {
      Button signup;
     ProgressDialog progressDialog;
     TextView signintext;
-
+    Spinner userType;
+    String type;
 
 
     private static Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL)
@@ -41,6 +44,7 @@ public class SignUp extends AppCompatActivity {
         passwrod=(TextInputEditText)findViewById(R.id.password);
         confirmPassword=(TextInputEditText)findViewById(R.id.confirmpassword);
         mobile=(TextInputEditText)findViewById(R.id.mobile);
+        userType =(Spinner)findViewById(R.id.spinner);
         signintext=(TextView)findViewById(R.id.signintext);
         setmobile=mobile;
         signintext.setOnClickListener(new View.OnClickListener() {
@@ -55,24 +59,18 @@ public class SignUp extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                progressDialog=new ProgressDialog(SignUp.this);
-//                progressDialog.setTitle("Creating Account");
-//                progressDialog.setMessage("Please wait while we create your account");
-//                progressDialog.setCancelable(false);
-//                progressDialog.show();
+
                 progressDialog=new ProgressDialog(SignUp.this);
                 progressDialog.setTitle("Creating Account");
                 progressDialog.setMessage("Please wait while we creating your account");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
-//                Intent i=new Intent(Register.this,Login.class);
-//                startActivity(i);
-
+                type=userType.getSelectedItem().toString();
                 startRegister(name.getEditableText().toString(),
                         email.getEditableText().toString(),
                         passwrod.getEditableText().toString(),
                         confirmPassword.getEditableText().toString(),
-                        mobile.getEditableText().toString());
+                        mobile.getEditableText().toString(),type);
 
             }
         });
@@ -80,7 +78,7 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-    private void startRegister(String name, String email, String password, String confirmPassword, final String mobile) {
+    private void startRegister(String name, String email, String password, String confirmPassword, final String mobile,String type) {
 
 
 
@@ -141,7 +139,7 @@ public class SignUp extends AppCompatActivity {
 
         RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
 
-        Call<Model> call=retrofitInterface.register(mobile,password,email,name);
+        Call<Model> call=retrofitInterface.register(mobile,password,email,name,type);
         call.enqueue(new Callback<Model>() {
             @Override
             public void onResponse(Call<Model> call, Response<Model> response) {

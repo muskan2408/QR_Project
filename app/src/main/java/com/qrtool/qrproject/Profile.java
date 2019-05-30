@@ -1,5 +1,6 @@
 package com.qrtool.qrproject;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import com.qrtool.qrproject.Retrofit.RetrofitInterface;
 import com.qrtool.qrproject.util.Model;
 import com.qrtool.qrproject.util.User;
 
+import java.util.HashMap;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +28,7 @@ public class Profile extends AppCompatActivity {
        FloatingActionButton edit;
        SessionManagement session;
        TextView email,mobile,name;
+    ProgressDialog progressDialog;
     User u;
        Model model;
     Gson gson = new GsonBuilder().setLenient().create();
@@ -41,7 +45,16 @@ public class Profile extends AppCompatActivity {
         name=(TextView)findViewById(R.id.name);
         edit=(FloatingActionButton)findViewById(R.id.floatingActionButton);
         session=new SessionManagement(this);
-         String token=getIntent().getStringExtra("token");
+        progressDialog=new ProgressDialog(Profile.this);
+                progressDialog.setTitle("Loading...");
+                progressDialog.setMessage("Please wait while we are loading you profile");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+    //    u=model.getUser();
+
+        HashMap<String, String> user = session.getUserDetails();
+
+        String token=user.get(SessionManagement.KEY_TOKEN);
         Call<Model> call=retrofitInterface.show_profile(token);
         call.enqueue(new Callback<Model>() {
             @Override
@@ -49,6 +62,7 @@ public class Profile extends AppCompatActivity {
                 model=response.body();
                 if(model.getSuccess())
                 {
+                    progressDialog.cancel();
                     u=model.getUser();
                     name.setText(u.getName().toUpperCase());
                     email.setText(u.getEmail());
@@ -60,6 +74,7 @@ public class Profile extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Model> call, Throwable t) {
+                progressDialog.cancel();
                 Log.e("TAG", "response 33: " + t.getMessage());
 
             }

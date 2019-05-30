@@ -1,52 +1,6 @@
 //
 package com.qrtool.qrproject;
 
-//import android.os.Bundle;
-//import android.support.v4.app.FragmentActivity;
-//import com.google.android.gms.maps.CameraUpdateFactory;
-//import com.google.android.gms.maps.GoogleMap;
-//import com.google.android.gms.maps.OnMapReadyCallback;
-//import com.google.android.gms.maps.SupportMapFragment;
-//import com.google.android.gms.maps.model.LatLng;
-//import com.google.android.gms.maps.model.MarkerOptions;
-//
-//public class Maps extends FragmentActivity implements OnMapReadyCallback {
-//
-//    private GoogleMap mMap;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_maps);
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
-//    }
-//
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//
-//        // Add a marker in Sydney, Australia, and move the camera.
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-//    }
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -68,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -105,13 +60,13 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback, Google
     private boolean mLocationPermissionGranted = false;
     private FusedLocationProviderClient mfusedLocationProviderClient;
     Location currentLocation;
-    private ImageView mgps, mInfo, mPlacePicker;
     private static final float DEFAULT_ZOOM = 15f;
-    private AutoCompleteTextView mSearchText;
+  //  private AutoCompleteTextView mSearchText;
     GoogleApiClient mGoogleApiClient;
     private PlaceInfo mPlace;
     private static final int PLACE_PICKER_REQUEST = 1;
     private Marker mMarker;
+    RelativeLayout searchbar;
     private PlaceAutocompleteAdapter mplaceAutocompleteAdapter;
     private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
     private static final String FINE_LOCATION = android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -131,12 +86,11 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback, Google
                 .enableAutoManage(this, this)
                 .build();
 
-        mSearchText = (AutoCompleteTextView)findViewById(R.id.input_search);
-        mgps = (ImageView) findViewById(R.id.ic_gps);
-        mInfo = (ImageView) findViewById(R.id.place_info);
-        mPlacePicker = (ImageView) findViewById(R.id.place_picker);
+     //   mSearchText = (AutoCompleteTextView)findViewById(R.id.input_search);
+
         getLocationPermission();
 
+//        searchbar.setVisibility(View.GONE);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -191,83 +145,22 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback, Google
     private void init() {
 
         Log.d(TAG,"initializing");
-        mSearchText.setOnItemClickListener(mAutoCompleteListener);
+    //    mSearchText.setOnItemClickListener(mAutoCompleteListener);
         mplaceAutocompleteAdapter =new PlaceAutocompleteAdapter(this,
                 Places.getGeoDataClient(this,null),LAT_LNG_BOUNDS,null);
-        mSearchText.setAdapter(mplaceAutocompleteAdapter);
+    //    mSearchText.setAdapter(mplaceAutocompleteAdapter);
 
-        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-                if(actionId== EditorInfo.IME_ACTION_SEARCH|| actionId==EditorInfo.IME_ACTION_DONE
-                        || event.getAction()==KeyEvent.ACTION_DOWN
-                        ||event.getAction()==KeyEvent.KEYCODE_ENTER){
-                    //execute our method for searching
-                    geoLocate();
-                    hideSoftKeyboard();
-                    mgps.setVisibility(View.VISIBLE);
-                    return true;
-
-                }
-                return false;
-            }
-        });
-        mgps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "get gps location");
-                getDeviceLocation();
-                hideSoftKeyboard();
-            }
-        });
-        mInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: cliccked place info");
-                try {
-
-                    if (mMarker.isInfoWindowShown()) {
-                        mMarker.hideInfoWindow();
-                    } else {
-                        Log.d(TAG, "onClick: placeinfo: " + mPlace.toString());
-                        mMarker.showInfoWindow();
-                    }
-
-                } catch (NullPointerException e) {
-                    Log.e(TAG, "onClick:NullPointerException" + e.getMessage());
-                }
-            }
-        });
-
-        mPlacePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
-                try {
-                    startActivityForResult(builder.build(Maps.this), PLACE_PICKER_REQUEST);
-                } catch (GooglePlayServicesRepairableException e) {
-                    e.printStackTrace();
-                    Log.e(TAG, "Onclick: GooglePlayServicesRepairableException" + e.getMessage());
-                } catch (GooglePlayServicesNotAvailableException e) {
-                    e.printStackTrace();
-                    Log.e(TAG, "Onclick: GooglePlayServicesNotAvailableException" + e.getMessage());
-
-                }
-            }
-        });
-
+     //
     }
 
     private void geoLocate() {
         Log.d(TAG,"geolocating");
 
-        String searchString=mSearchText.getText().toString();
+      //  String searchString=mSearchText.getText().toString();
         Geocoder geocoder=new Geocoder(this);
         List<Address> list=new ArrayList<>();
         try{
-            list=geocoder.getFromLocationName(searchString,1);
+       //     list=geocoder.getFromLocationName(searchString,1);
         }catch(Exception e)
         {
             Log.e(TAG,"geoLocate: IOException"+e.getMessage());
@@ -483,7 +376,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback, Google
                 //   mPlace.setAttributions(place.getName().toString());
                 mPlace.setId(place.getId().toString());
                 mPlace.setLatLng(place.getLatLng());
-                mPlace.setWebsiteUri(place.getWebsiteUri());
+              //  mPlace.setWebsiteUri(place.getWebsiteUri());
                 mPlace.setRating(place.getRating());
 
                 Log.d(TAG, "OnResult: place details" + mPlace.toString());
@@ -495,15 +388,6 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback, Google
             moveCamera(new LatLng(place.getViewport().getCenter().latitude, place.getViewport().getCenter().longitude),
                     DEFAULT_ZOOM, mPlace);
 
-//            Log.d(TAG,"OnResult:place details: "+place.getAttributions());
-//            Log.d(TAG,"OnResult:place details: "+place.getViewport());
-//            Log.d(TAG,"OnResult:place details: "+place.getAddress());
-//            Log.d(TAG,"OnResult:place details: "+place.getPhoneNumber());
-//            Log.d(TAG,"OnResult:place details: "+place.getLatLng());
-//            Log.d(TAG,"OnResult:place details: "+place.getId());
-//            Log.d(TAG,"OnResult:place details: "+place.getWebsiteUri());
-//            Log.d(TAG,"OnResult:place details: "+place.getRating());
-//
             places.release();
 
         }

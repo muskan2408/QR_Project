@@ -34,6 +34,11 @@ public class SessionManagement {
     public static final String KEY_PIN = "pin";
 
     public static final String KEY_TOKEN ="token";
+
+    public static final String KEY_TYPE ="userType";
+
+
+
     // Constructor
     public SessionManagement(Context context){
         this._context = context;
@@ -43,11 +48,9 @@ public class SessionManagement {
     /**
      * Create login session
      * */
-    public void createLoginSession(String mobile,String pin,String token){
+    public void createLoginSession(String mobile,String pin,String token,String userType){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
-
-
 
         // Storing email in pref
         editor.putString(KEY_CONTACT, mobile);
@@ -56,6 +59,9 @@ public class SessionManagement {
         editor.putString(KEY_PIN, pin);
 
         editor.putString(KEY_TOKEN,token);
+
+        editor.putString(KEY_TYPE,userType);
+
 
         // commit changes
         editor.commit();
@@ -100,6 +106,9 @@ public class SessionManagement {
         user.put(KEY_PIN, pref.getString(KEY_PIN ,null));
 
         user.put(KEY_TOKEN,pref.getString(KEY_TOKEN,null));
+
+        user.put(KEY_TYPE,pref.getString(KEY_TYPE,null));
+
         // return user
         return user;
     }

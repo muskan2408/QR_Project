@@ -45,6 +45,7 @@ public class SplashScreen extends AppCompatActivity {
     SessionManagement session;
     Gson gson = new GsonBuilder().setLenient().create();
     Model model;
+
     OkHttpClient client = new OkHttpClient();
     Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create(gson));
     Retrofit retrofit=builder.build();
@@ -351,9 +352,10 @@ public class SplashScreen extends AppCompatActivity {
 
 
                 }
-                else{   HashMap<String, String> user = session.getUserDetails();
+                else{
+                    HashMap<String, String> user = session.getUserDetails();
 
-                    String token=user.get(SessionManagement.KEY_TOKEN);
+                    final String token=user.get(SessionManagement.KEY_TOKEN);
                     Call<Model> call=retrofitInterface.session_manage(token);
 
                     call.enqueue(new Callback<Model>() {
@@ -384,7 +386,7 @@ public class SplashScreen extends AppCompatActivity {
                                 Log.e("TAG", "response 33: " + response.body());
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                intent.putExtra("Model", model);
+                                intent.putExtra("model", token);
                                 startActivity(intent);
                                 finish();
                             }

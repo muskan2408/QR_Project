@@ -72,13 +72,20 @@ ProgressDialog progressDialog;
         String raddress=i.getStringExtra("ReceiverAddress");
         String rmobile=i.getStringExtra("ReceiverMobile");
         String rname=i.getStringExtra("ReceiverName");
+        String date=i.getStringExtra("date");
+        String time=i.getStringExtra("time");
+        String packageName=i.getStringExtra("packageName");
+        double latitude=i.getDoubleExtra("latitude",0);
+        double longitude=i.getDoubleExtra("longitude",0);
+        String id=i.getStringExtra("qrid");
+
         Log.d("dfgersfgggggggg",productdesc);
         image=(ImageView)findViewById(R.id.iv);
         try {
             progressDialog=new ProgressDialog(this);
             progressDialog.setTitle("Generating QR");
             progressDialog.setCancelable(false);
-            BitMatrix bitMatrix=multiFormatWriter.encode(productdesc+ " "+raddress+ " "+rmobile+" "+rname,
+            BitMatrix bitMatrix=multiFormatWriter.encode("Package Name: "+packageName+" Product Description: "+productdesc+" Reciever's Address:"+ " "+raddress+ " Reciever's Mobile"+" "+rmobile+" Reciever's Name"+" "+rname+" Date: "+date +"Time: "+time +" Latitude: "+latitude +" Longtitude:"+longitude+" qrId: "+id,
                     BarcodeFormat.QR_CODE,200,200);
             BarcodeEncoder barcodeEncoder=new BarcodeEncoder();
             bitmap=barcodeEncoder.createBitmap(bitMatrix);
@@ -186,7 +193,12 @@ ProgressDialog progressDialog;
         return bitmap;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i =new Intent(QrGenerate.this,MainActivity.class);
+        startActivity(i);
+    }
 
     private boolean isStoragePermissionGranted() {
 

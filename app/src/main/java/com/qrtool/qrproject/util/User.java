@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
 
-    String name,contact,email;
+    private String name,contact,email;
 
 
     protected User(Parcel in) {

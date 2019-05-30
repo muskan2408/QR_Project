@@ -6,6 +6,9 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Model implements Parcelable {
     @SerializedName("success")
     @Expose
@@ -19,6 +22,54 @@ public class Model implements Parcelable {
     @SerializedName("user")
     @Expose
     private User user;
+
+    @SerializedName("qrId")
+    @Expose
+    private String qrId;
+
+    @SerializedName("usertype")
+    @Expose
+    private String userType;
+
+    @SerializedName("data")
+    @Expose
+    private ArrayList<History> data;
+
+    @SerializedName("status")
+    @Expose
+    private ArrayList<Status> status;
+
+    public ArrayList<Status> getStatus() {
+        return status;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public void setStatus(ArrayList<Status> status) {
+        this.status = status;
+    }
+
+    public ArrayList<History> getData() {
+        return data;
+    }
+
+    public void setData(ArrayList<History> data) {
+        this.data = data;
+    }
+
+    public String getQrId() {
+        return qrId;
+    }
+
+    public void setQrId(String qrId) {
+        this.qrId = qrId;
+    }
 
     protected Model(Parcel in) {
         byte tmpSuccess = in.readByte();

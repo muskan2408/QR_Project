@@ -23,6 +23,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".QrHistory"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionAndStatusBar" />
+        <activity
+            android:name=".Report"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionAndStatusBar" />
+        <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionAndStatusBar" />
@@ -79,9 +87,14 @@
             android:name=".Maps"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionAndStatusBar" />
-        <activity android:name=".VerifyMobile"
+        <activity
+            android:name=".VerifyMobile"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionAndStatusBar"></activity>
+            android:theme="@style/AppTheme.NoActionAndStatusBar" />
+        <activity
+            android:name=".ScanQr"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionAndStatusBar" />
     </application>
 
 </manifest>

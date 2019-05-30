@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,9 @@ Button signin;
 TextInputEditText mobile,password;
     Model model;
     TextView signup;
+    PrefManager prefManager;
     ProgressDialog progressDialog;
+    Spinner userType;
     String  token;
     SessionManagement session;
     private static final String TAG="Login";
@@ -46,6 +49,9 @@ TextInputEditText mobile,password;
         mobile=(TextInputEditText)findViewById(R.id.mobile); 
         password=(TextInputEditText)findViewById(R.id.password);
         signup=(TextView)findViewById(R.id.signuptext);
+        session=new SessionManagement(getApplicationContext());
+
+        prefManager=new PrefManager(getApplicationContext());
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,10 +75,11 @@ TextInputEditText mobile,password;
 //                startActivity(i);
             }
         });
+
        
     }
 
-    private void startLogin(String mobilenumber, String spassword) {
+    private void startLogin(final String mobilenumber, String spassword) {
         if(spassword.isEmpty()){
             progressDialog.dismiss();
             password.setError("Mobile is required");
@@ -124,16 +131,22 @@ TextInputEditText mobile,password;
                 Log.d("check",String.valueOf(check));
 
 
+
                 if(check){
                     progressDialog.cancel();
                     Toast.makeText(SignIn.this, "Signin Successful", Toast.LENGTH_SHORT).show();
-                   // session.createLoginSession(mobile.toString(), password.toString(),model.getToken());
+                    String userType;
+                    userType=model.getUserType();
+                    session.createLoginSession(mobile.toString(), password.toString(),model.getToken(),userType);
 
                   token=model.getToken();
+
+
                     Log.e(TAG,token);
                     Intent i=new Intent(SignIn.this,MainActivity.class);
                     // i.putExtra("allvalues", model);
                     i.putExtra("token",token);
+                    i.putExtra("userType",userType);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     finish();

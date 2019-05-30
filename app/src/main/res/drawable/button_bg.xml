@@ -10,8 +10,8 @@
         android:topRightRadius="30dp" />
 
     <gradient
-        android:startColor="#C62828"
-        android:endColor="#AD1457"
+        android:startColor="#EF6C00"
+        android:endColor="#BF360C"
         android:angle="180"/>
 
     <padding

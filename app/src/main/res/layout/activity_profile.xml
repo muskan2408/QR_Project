@@ -50,30 +50,31 @@
         tools:text="MUSKAN KATARIA" />
 
 
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="0dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="8dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:text="Email ID :"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+    <!--<TextView-->
+        <!--android:id="@+id/email"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="34dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="52dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:paddingLeft="40dp"-->
+        <!--android:paddingRight="40dp"-->
+        <!--android:text="Email ID :"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="18sp"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.0"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/name" />-->
 
     <TextView
         android:id="@+id/emailid"
         android:layout_width="0dp"
         android:layout_height="32dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
         android:textAlignment="center"
@@ -82,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/name"
         tools:text="Muskankataria2408@gmail.com" />
 
     <TextView
